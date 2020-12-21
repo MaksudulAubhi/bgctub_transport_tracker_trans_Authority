@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.bgctub_transport_tracker_trans_authority">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Bgctub_transport_tracker_trans_Authority">
+        <activity android:name=".ProfileUpdateActivity"
+            android:label="@string/updateProfileActivityTitle"
+            android:parentActivityName=".AppMainActivity"/>
+        <activity
+            android:name=".TransportInfoDetailsActivity"
+            android:label="@string/transInfoActivityTitle"
+            android:parentActivityName=".AppMainActivity" />
+        <activity
+            android:name=".HelpActivity"
+            android:label="@string/helpActivityTitle"
+            android:parentActivityName=".SignInActivity" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/changePassActivityTitle"
+            android:parentActivityName=".SettingsActivity" />
+        <activity
+            android:name=".DeleteAccountActivity"
+            android:label="@string/DeleteAccountActivityTitle"
+            android:parentActivityName=".SettingsActivity" />
+        <activity
+            android:name=".NewsAndUpdateActivity"
+            android:label="@string/newsAndUpdateActivity"
+            android:parentActivityName=".AppMainActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settingsActivityTitle"
+            android:launchMode="singleTop"
+            android:parentActivityName=".AppMainActivity" />
+        <activity
+            android:name=".AppMainActivity"
+            android:label="@string/title_activity_app_main"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Bgctub_transport_tracker_trans_Authority.NoActionBar" />
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:label="@string/forgotPassActivityTitle"
+            android:parentActivityName=".SignInActivity" />
+        <activity
+            android:name=".SignInActivity"
+            android:label="Transport Authority App: Sign In"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".TipsActivity"
+            android:label="@string/tips_activity_title" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".services.BuildNotificationService"
+            android:enabled="true"
+            android:exported="true" />
+
+
+        <service android:name=".services.MyFirebaseMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="true" />
+    </application>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>
