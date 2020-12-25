@@ -134,7 +134,7 @@ public class ProfileUpdateActivity extends AppCompatActivity implements View.OnC
 
         //input validation**
         if (TextUtils.isEmpty(name)) {
-            nameEdiText.setError("Please enter your name");
+            nameEdiText.setError("Please enter your full name");
             return;
         }
         if (TextUtils.isEmpty(contact)) {
