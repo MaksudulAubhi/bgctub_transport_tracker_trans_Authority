@@ -130,15 +130,7 @@ public class ProfileUpdateActivity extends AppCompatActivity implements View.OnC
         String office_no=office_no_EditText.getText().toString().trim();
         String job_post=job_post_EditText.getText().toString().trim();
 
-        //For gender radio button
-        int genderID = genderRadioGroup.getCheckedRadioButtonId();
-        if (genderID == -1) {
-            genderErrorTextView.setVisibility(View.VISIBLE);
-            return;
-        } else {
-            genderRadioButton = (RadioButton) findViewById(genderID);
-            gender = genderRadioButton.getText().toString().trim();
-        }
+
 
         //input validation**
         if (TextUtils.isEmpty(name)) {
@@ -156,6 +148,16 @@ public class ProfileUpdateActivity extends AppCompatActivity implements View.OnC
         if (TextUtils.isEmpty(job_post)) {
             job_post_EditText.setError("Please enter job post");
             return;
+        }
+
+        //For gender radio button validation and get text
+        int genderID = genderRadioGroup.getCheckedRadioButtonId();
+        if (genderID == -1) {
+            genderErrorTextView.setVisibility(View.VISIBLE);
+            return;
+        } else {
+            genderRadioButton = (RadioButton) findViewById(genderID);
+            gender = genderRadioButton.getText().toString().trim();
         }
 
         progressDialog.setMessage("Please wait...");

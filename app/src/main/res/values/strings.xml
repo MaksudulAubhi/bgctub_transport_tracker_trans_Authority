@@ -42,7 +42,7 @@
     <string name="updateProfileActivityTitle">My Profile</string>
 
 
-    <string name="sign_in_help_text">Enter your account email and password to sign in.If you are a new user,
+    <string name="sign_in_help_text">Enter your account email and password to sign in. If you are a new user,
         you will be given the opportunity to verify your account.
         If you forget the password, click on the "forgot password?" option.
         Enter your account email to reset password. We will send an email with password reset link.</string>
