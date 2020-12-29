@@ -412,6 +412,18 @@
 
 
 
+                <TextView
+                    android:id="@+id/copy_driver_users_info_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="50dp"
+                    android:layout_marginTop="15dp"
+                    android:text="Copy all information to the Clipboard"
+                    android:textColor="#039BE5"
+                    android:textSize="16sp" />
+
+
+
             </LinearLayout>
 
             <!-- bottom nav app name-->

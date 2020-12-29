@@ -25,7 +25,7 @@ public class TransportInfoDetailsActivity extends AppCompatActivity implements V
     private TextView driverNameTextView,driverContactTextView,driverAddressTextView;
     private TextView transportNameTextView, transportNumberTextView;
     private TextView schedule_time_TextView,schedule_day_TextView,scheduleRoadTextView, start_loc_TextView,destinitionTextView;
-    private TextView copyTextView;
+    private TextView copyTextView,copyAllUsersInfoTextView;
     private DatabaseReference transportInfoDatabaseRef;
 
     @Override
@@ -62,6 +62,9 @@ public class TransportInfoDetailsActivity extends AppCompatActivity implements V
 
         copyTextView=findViewById(R.id.copy_contact_textview);
         copyTextView.setOnClickListener(this);
+
+        copyAllUsersInfoTextView = findViewById(R.id.copy_driver_users_info_textview);
+        copyAllUsersInfoTextView.setOnClickListener(this);
 
 
         //database path and references
@@ -143,6 +146,41 @@ public class TransportInfoDetailsActivity extends AppCompatActivity implements V
                 clipboardManager.setPrimaryClip(clipData);
                 Toast.makeText(TransportInfoDetailsActivity.this,"Contact Number Copied", Toast.LENGTH_LONG).show();
             }
+        }
+        if(v==copyAllUsersInfoTextView){
+            String name = driverNameTextView.getText().toString().trim();
+            String contact=driverContactTextView.getText().toString().trim();
+            String address= driverAddressTextView.getText().toString().trim();
+            String transName = transportNameTextView.getText().toString().trim();
+            String transNumber =transportNumberTextView.getText().toString().trim();
+            String schTime = schedule_time_TextView.getText().toString().trim();
+            String schDate = schedule_day_TextView.getText().toString().trim();
+            String schRoad = scheduleRoadTextView.getText().toString().trim();
+            String startLoc = start_loc_TextView.getText().toString().trim();
+            String destination = destinitionTextView.getText().toString().trim();
+
+
+            String allInformation ="Driver Profile:\n\n"
+                    + "Name:\n" + name + "\n\n"
+                    + "Contact Number:\n" + contact + "\n\n"
+                    + "Address:\n" + address + "\n\n"
+
+                    +"Vehicle Information:\n\n"
+                    + "Company Name:\n" + transName + "\n\n"
+                    + "Vehicle Number:\n" + transNumber+ "\n\n"
+
+                    +"Journey Schedule:\n\n"
+                    + "Start Time:\n" + schTime + "\n\n"
+                    + "Start Date:\n" + schDate+ "\n\n"
+                    + "Starting Place:\n" + startLoc+ "\n\n"
+                    + "Destination:\n" + destination+ "\n\n"
+                    + "Road:\n" + schRoad;
+
+            //copy driver contact number to clipboard**
+            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("Bus Information", allInformation);
+            clipboardManager.setPrimaryClip(clipData);
+            Toast.makeText(TransportInfoDetailsActivity.this, "Bus Information Copied", Toast.LENGTH_LONG).show();
         }
     }
 }
