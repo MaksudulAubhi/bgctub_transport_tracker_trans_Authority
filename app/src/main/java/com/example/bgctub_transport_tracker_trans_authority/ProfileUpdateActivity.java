@@ -16,7 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bgctub_transport_tracker_trans_authority.data_secure.DataSecure;
 import com.example.bgctub_transport_tracker_trans_authority.model.ProfileInformation;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +40,7 @@ public class ProfileUpdateActivity extends AppCompatActivity implements View.OnC
     private DatabaseReference authorityInfoDatabaseRef;
     private ProgressDialog progressDialog;
     private String gender;
+    private DataSecure dataSecure;
 
 
     @Override
@@ -62,6 +66,9 @@ public class ProfileUpdateActivity extends AppCompatActivity implements View.OnC
         profileUpdateButton.setOnClickListener(this);
         progressDialog=new ProgressDialog(this);
 
+        //for encoding and decoding
+        dataSecure=new DataSecure();
+
         //firebase authentication and database reference**
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -86,11 +93,11 @@ public class ProfileUpdateActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try{
-                    String name = snapshot.child("name").getValue().toString();
-                    String gender = snapshot.child("gender").getValue().toString();
-                    String contact=snapshot.child("contact").getValue().toString();
-                    String office_no=snapshot.child("office_no").getValue().toString();
-                    String post=snapshot.child("post").getValue().toString();
+                    String name = dataSecure.dataDecode(snapshot.child("name").getValue().toString());
+                    String gender = dataSecure.dataDecode(snapshot.child("gender").getValue().toString());
+                    String contact=dataSecure.dataDecode(snapshot.child("contact").getValue().toString());
+                    String office_no=dataSecure.dataDecode(snapshot.child("office_no").getValue().toString());
+                    String post=dataSecure.dataDecode(snapshot.child("post").getValue().toString());
 
                     nameEdiText.setText(name);
                     contactEdiText.setText(contact);
@@ -160,20 +167,36 @@ public class ProfileUpdateActivity extends AppCompatActivity implements View.OnC
             gender = genderRadioButton.getText().toString().trim();
         }
 
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage("Updating Information");
         progressDialog.show();
 
         //data upload**
-        ProfileInformation profileInformation=new ProfileInformation(userId,name,gender,email,contact,office_no,job_post);
+        ProfileInformation profileInformation=new ProfileInformation(userId,
+                dataSecure.dataEncode(name),dataSecure.dataEncode(gender),
+                dataSecure.dataEncode(email),dataSecure.dataEncode(contact),
+                dataSecure.dataEncode(office_no),dataSecure.dataEncode(job_post));
         try {
-            authorityInfoDatabaseRef.setValue(profileInformation);
+            authorityInfoDatabaseRef.setValue(profileInformation).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(ProfileUpdateActivity.this,"Profile Updated Successfully", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(ProfileUpdateActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileUpdateActivity.this,"Please try again later",Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                }
+            });
 
-            Toast.makeText(this,"Profile Updated Successfully", Toast.LENGTH_LONG).show();
+
         }catch(Exception exception){
 
             Toast.makeText(this,"Please try again later",Toast.LENGTH_LONG).show();
         }
-        progressDialog.dismiss();
+
 
     }
 

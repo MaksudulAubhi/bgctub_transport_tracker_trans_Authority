@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.bgctub_transport_tracker_trans_authority.ProfileUpdateActivity;
 import com.example.bgctub_transport_tracker_trans_authority.R;
+import com.example.bgctub_transport_tracker_trans_authority.data_secure.DataSecure;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +33,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private FirebaseAuth mAuth;
     private DatabaseReference authorityInfoDatabaseRef;
     private FirebaseUser mUser;
-
+    private DataSecure dataSecure;
     private ProfileViewModel mViewModel;
 
     public static ProfileFragment newInstance() {
@@ -53,6 +54,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         editProfileButton.setOnClickListener(this);
 
+        //for encoding and decoding
+        dataSecure=new DataSecure();
 
         //firebase authentication and database reference**
         mAuth = FirebaseAuth.getInstance();
@@ -80,12 +83,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try {
-                    String name = snapshot.child("name").getValue().toString();
-                    String gender = snapshot.child("gender").getValue().toString();
-                    String email = snapshot.child("email").getValue().toString();
-                    String contact=snapshot.child("contact").getValue().toString();
-                    String office_no=snapshot.child("office_no").getValue().toString();
-                    String post=snapshot.child("post").getValue().toString();
+                    String name = dataSecure.dataDecode(snapshot.child("name").getValue().toString());
+                    String gender = dataSecure.dataDecode(snapshot.child("gender").getValue().toString());
+                    String email = dataSecure.dataDecode(snapshot.child("email").getValue().toString());
+                    String contact=dataSecure.dataDecode(snapshot.child("contact").getValue().toString());
+                    String office_no=dataSecure.dataDecode(snapshot.child("office_no").getValue().toString());
+                    String post=dataSecure.dataDecode(snapshot.child("post").getValue().toString());
 
                     nameTextView.setText(name);
                     genderTextView.setText(gender);

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.bgctub_transport_tracker_trans_authority.R;
 import com.example.bgctub_transport_tracker_trans_authority.TransportInfoDetailsActivity;
 import com.example.bgctub_transport_tracker_trans_authority.adapter.CustomList;
+import com.example.bgctub_transport_tracker_trans_authority.data_secure.DataSecure;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +41,7 @@ public class TransportInformationFragment extends Fragment implements AdapterVie
     private FirebaseUser mUser;
     private String userId;
     private DatabaseReference vehicleListDatabaseRef;
+    private DataSecure dataSecure;
 
     public static TransportInformationFragment newInstance() {
         return new TransportInformationFragment();
@@ -50,6 +52,8 @@ public class TransportInformationFragment extends Fragment implements AdapterVie
                              @Nullable Bundle savedInstanceState) {
         View root= inflater.inflate(R.layout.transport_information_fragment, container, false);
 
+        //for encoding and decoding
+        dataSecure=new DataSecure();
 
         //database ref and others**
         mAuth = FirebaseAuth.getInstance();
@@ -95,9 +99,9 @@ public class TransportInformationFragment extends Fragment implements AdapterVie
                         userId = userIdSnapShot.getKey();
 
                         try {
-                            String vehicle_name = snapshot.child(userId).child("transport_information").child("vehicle_name").getValue().toString();
-                            String vehicle_number = snapshot.child(userId).child("transport_information").child("vehicle_number").getValue().toString();
-                            String driver_name = snapshot.child(userId).child("transport_information").child("driver_name").getValue().toString();
+                            String vehicle_name = dataSecure.dataDecode(snapshot.child(userId).child("transport_information").child("vehicle_name").getValue().toString());
+                            String vehicle_number = dataSecure.dataDecode(snapshot.child(userId).child("transport_information").child("vehicle_number").getValue().toString());
+                            String driver_name = dataSecure.dataDecode(snapshot.child(userId).child("transport_information").child("driver_name").getValue().toString());
 
 
                             //add data to list**
