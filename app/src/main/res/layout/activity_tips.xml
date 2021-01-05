@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:gravity="center_horizontal"
-                android:text="Please, keep on your phone\'s internet connection "
+                android:text="Please, keep on your phone\'s internet connection."
                 android:textAlignment="center"
                 android:textColor="#0E0E0E"
                 android:textSize="18sp"
